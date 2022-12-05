@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h1>{{ application.title }}</h1>
+
+{%if application.photo%}
+    <p><img src="{{ application.photo.url}}"></p>
+{%endif%}
+
+{{ application.content|linebreaks }}
+
+{% endblock %}

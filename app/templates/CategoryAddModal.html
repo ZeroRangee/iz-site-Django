@@ -1,0 +1,22 @@
+{% load static %}
+{% block content %}
+    <div class="overlayCategoryAddModal" >
+        <div class="modalCategoryAdd">
+            <div class="CategoryAdd">
+                <div class="title">Вы точно хотите удалить заявку?</div>
+                <div>
+                    <form method="POST" id="CategoryAdd" action="{% url 'categoryAdd' %}">
+                        {% csrf_token %}
+                        <div class="input-box">
+                            {{ categoryAdd.category }}
+                        </div>    
+                            <p class="msg none">NoName</p>  
+
+                            <input type="submit" value="Добавить" />
+                        
+                    </form> 
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock  %}

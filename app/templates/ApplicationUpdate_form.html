@@ -1,0 +1,23 @@
+{% load static %}
+{% block content %}
+    <div class="overlayApplicationUpdateAgreedModal" >
+        <div class="modalApplicationUpdateAgreed">
+            <div class="UpdateAgreed">
+                <div class="title">Вы точно хотите удалить заявку?</div>
+                <div>
+                    <form method="POST" id="UpdateAgreed">
+                        {% csrf_token %}
+                        <div class="input-box">
+                            {{ applicationAgreed.photo_after }}
+                            <label for="{{  applicationAgreed.photo_after.id_for_label }}" >{{ applicationAgreed.photo_after.label }}</label>
+                        </div>    
+                            <p class="msg none">NoName</p>  
+
+                            <input type="submit" value="Одобрить" />
+                        
+                    </form> 
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock  %}

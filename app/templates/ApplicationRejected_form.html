@@ -1,0 +1,23 @@
+{% load static %}
+{% block content %}
+    <div class="overlayApplicationUpdateRejectedModal" >
+        <div class="modalApplicationUpdateRejected">
+            <div class="UpdateRejected">
+                <div class="title">Вы точно хотите удалить заявку?</div>
+                <div>
+                    <form method="POST" id="UpdateRejected">
+                        {% csrf_token %}
+                        <div class="input-box">
+                            {{ applicationRejected }}
+                          
+                        </div>    
+                            <p class="msg none">NoName</p>  
+
+                            <input type="submit" value="Одобрить" />
+                        
+                    </form> 
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock  %}

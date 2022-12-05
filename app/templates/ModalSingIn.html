@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="overlaySingIn">
+    <div class="modalSingIn">
+            <div class="closeSingIn" >
+                <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 20 20" fill="currentColor" >
+                <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
+                </svg>
+            </div>
+            <form  method="POST"  id='SingInForm' action="{% url 'SingIn' %}">
+                <div class="title">Вход</div>
+
+                {% csrf_token %}
+                <div class="input-box">
+                    {{ formSingin.username }}
+                </div>
+                <div class="input-box">
+                    {{ formSingin.password }}
+                </div>
+                <fieldset>
+                    <input type="checkbox" class="checkbox" id="pass" >
+                    <label for="pass">Запомнить пароль</label>
+                </fieldset>
+
+                <div class="box-button">
+                    <input class="login-btn" type="submit" value="Войти">
+                </div>   
+
+                <p class="msg none"></p>
+
+            </form>
+            
+    </div>
+</div>
+{% endblock %}

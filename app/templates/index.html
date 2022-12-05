@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+
+{% block header %}
+<header>
+    <nav class="container">
+        <a href="#"><img  class="logo" src="{% static "icons/logo.png" %}"></a>
+        <div class="panel-auth">
+            {% if user.is_authenticated %}
+                {% if user.first_name %}
+                <a href="{% url 'profil' %}" >{{ user.first_name }}</a>
+                {% else %}
+                    <a href="{% url 'profil' %}">{{ user.username }}</a>
+                {% endif %}
+            {% else %} 
+                <a id="BtnSingUP" >Регистрация</a><hr><a id="BtnSingIn" >Вход</a>
+            {% endif %} 
+        </div>
+    </nav>
+</header>
+
+
+{% endblock header %}
+
+{% block content %}
+{% include 'ModalSingIn.html' %}
+{% include 'ModalSingUp.html' %} 
+
+
+
+<main class="wrapper container">
+    <section class="numberZayvki">
+        <div >
+            <h1 class="">Ижевск</h1><br>
+            <p class="zayvnum">Количество заявок:</p><br>
+            <p id="number">{{ allappli}}<span id="stick" >_</span></p>
+            
+        </div>
+
+    </section>
+    <section class="recentZayvki">
+        <h2>Недавние заявки</h2>
+        <hr>
+        <div>
+            {% for application in agreed %}
+                <div class="zayvoki"> 
+                {% if application.photo %}
+                    <img src="{{ application.photo.url }}" alt="asd">
+                {% endif %}
+                    {% if user.is_staff %}
+                        <a href=""> {{ application.title }}</a>
+                    {% else %}
+                        <a>{{ application.title }}</a>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+
+    </section>
+</main>
+
+
+{% endblock content %}

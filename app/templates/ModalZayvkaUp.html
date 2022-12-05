@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="overlayZayvka" >
+    <div class="modalZayvkaUp">
+        <div class="closeZayvkaUp" >
+            <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 20 20" fill="currentColor" >
+            <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
+            </svg>
+        </div>
+        <form  method="POST" enctype="multipart/form-data" id='ZayvkaForm' action="{% url 'addApplication' %}" >
+            <div class="title">Создание заявки </div>
+            {% csrf_token %}
+                <div class="input-box">
+                {{ applicationadd.title}}
+                {{ applicationadd.photo  }} 
+                <label for="{{  applicationadd.photo.id_for_label }}" >{{ applicationadd.photo.label }}</label>
+            </div>
+            <div class="input-box">
+                {{ applicationadd.content }}
+            </div>
+            <div class="input-box">
+                {{ applicationadd.cat}}
+            </div>
+ 
+            <p class="msg none">NoName</p>
+            <div class="box-button">
+                <input type="submit" name="btn-zayvka" value="Отправить заявку">
+            </div> 
+        </form>
+    </div>
+</div>
+{% endblock  %}
+

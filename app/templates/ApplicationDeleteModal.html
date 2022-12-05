@@ -1,0 +1,18 @@
+{% load static %}
+{% block content %}
+
+    <div class="overlayApplicationDeleteModal" >
+        <div class="modalApplicationDelete">
+            <div class="deletemodal">
+                <div class="title">Вы точно хотите удалить заявку?</div>
+                <div>
+                    <form id="DeleteModal" method="POST">
+                        {% csrf_token %}
+                            <input type="submit" class="delete" value="удалить" />
+                            <input type="submit" class="close" value="отмена" />
+                    </form> 
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock  %}

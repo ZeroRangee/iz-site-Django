@@ -1,0 +1,42 @@
+{% load static %}
+
+{% block content %}
+    <div class="overlaySingUp">
+        <div class="modalSingUp" >
+            <div class="closeSingUp" >
+                <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 20 20" fill="currentColor">
+                <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
+                </svg>
+            </div>
+                <form method="POST" id='SingUpForm' action="{% url 'SingUp'%}">
+                    <div class="title">Регистрация</div>
+                    {% csrf_token %}
+
+                    <div class="input-box">
+                        {{ formSingup.first_name }}
+                    </div>
+                    <div class="input-box">
+                        {{ formSingup.username }}
+                    </div>
+                    <div class="input-box">
+                        {{ formSingup.email }}
+                    </div>
+                    <div class="input-box">
+                        {{ formSingup.password1 }}
+                    </div>
+                    <div class="input-box">
+                        {{ formSingup.password2 }}
+                    </div> 
+                    <fieldset>
+                        <input name="check" type="checkbox" class="checkbox" id="reg" required>
+                        <label for="reg">Я принимаю условия <a href="">Пользовательского соглашения</a></label>
+                    </fieldset> 
+                    
+                    <div class="box-button">
+                        <input class="register-btn" type="submit" value="Зарегистрировать">
+                    </div>
+                    <p class="msg none"></p>
+            </form>
+        </div>
+    </div>
+{% endblock %}
