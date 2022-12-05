@@ -74,6 +74,7 @@ TEMPLATES = [
                 'app.context_processor.applicationaUpdateAgreed',
                 'app.context_processor.applicationaUpdateRejected',
                 'app.context_processor.categoryAdd',
+                'app.context_processor.categoryDelete',
                 
                 
             ],

@@ -23,3 +23,7 @@ def applicationaUpdateRejected(request):
 def categoryAdd(request):
     return { 'categoryAdd':  CategoryAddForms, }
 
+def categoryDelete(request):
+    return { 'categoryDelete':  CategoryDelete, }
+
+

@@ -90,7 +90,7 @@ class ApplicationRejectedUpdateForms(forms.Form):
         fields = ['rejection_reason']
         
 class CategoryAddForms(forms.ModelForm):
-    category= forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Название категории'}), required=False)
+    category = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Название категории'}), required=False)
     
     def clean_category(self):
         category = self.cleaned_data['category']
@@ -100,6 +100,16 @@ class CategoryAddForms(forms.ModelForm):
     class Meta:
         model = Category
         fields = ['category']
+        
+class CategoryDelete(forms.Form):
+    
+    categoryDelete = forms.CharField(widget=forms.Select(),required=False)
+    
+    class Meta:
+        model = Category
+        fields = ["categoryDelete"]
+        
+        
         
 class SingUpForm(UserCreationForm):
     first_name = forms.CharField(

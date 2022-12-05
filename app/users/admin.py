@@ -7,9 +7,9 @@ class ApplicationAdmin(admin.ModelAdmin):
     search_fields = ('title', 'content')
 
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name')
-    list_display_links = ('id', 'name')
-    search_fields = ('name',)
+    list_display = ('id', 'category')
+    list_display_links = ('id', 'category')
+    search_fields = ('category',)
     
 
 

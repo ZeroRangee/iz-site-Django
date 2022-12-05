@@ -1,0 +1,20 @@
+{% load static %}
+{% block content %}
+    <div class="overlayCategoryDeleteModal" id="delView">
+        <div class="modalCategoryDelete">
+            <div class="CategoryAdd">
+                <div class="title">Вы точно хотите удалить заявку?</div>
+                <div>
+                    <form method="POST" id="CategoryAdd" action="{% url 'categoryAdd' %}">
+                        {% csrf_token %}
+                        <div class="input-box">
+                            {{ categoryDelete.categoryDelete }}
+                        </div>    
+                            <p class="msg none">NoName</p>
+                            <input type="submit" value="Добавить" />
+                    </form> 
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock  %}

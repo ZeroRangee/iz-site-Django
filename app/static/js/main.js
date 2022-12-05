@@ -293,6 +293,29 @@ $(document).ready(function ($) {
 	});
 });
 
+$(document).ready(function ($) {
+	$('.categoryDelete').click(function () {
+		$('.overlayCategoryDeleteModal').fadeIn();
+		return false;
+	});
+	$('.closeZayvkaUp').click(function () {
+		$(this).parents('.overlayCategoryDeleteModal').fadeOut();
+		return false;
+	});
+	$(document).keydown(function (e) {
+		if (e.keyCode === 27) {
+			e.stopPropagation();
+			$('.overlayCategoryDeleteModal').fadeOut();
+		}
+	});
+	$('.overlayCategoryDeleteModal').click(function (e) {
+		if ($(e.target).closest('.modalCategoryDelete').length == 0) {
+			$(this).fadeOut();
+		}
+	});
+});
+
+
 
 
 $(function ($) {
@@ -461,6 +484,8 @@ $(function ($) {
 		)
 	})
 })
+
+
 
 
 // function getAppli() {

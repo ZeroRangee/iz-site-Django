@@ -13,7 +13,7 @@
         {% if user.is_superuser %}
             <div class="categoryBlock">
                 <input type="button" value="Добавить категорию" class="categoryAdd"/>
-                <input type="button" value="Удалить категорию" class="categoryDelete"/>
+                <input type="button" value="Удалить категорию" class="categoryDelete" id="delButton"/>
             </div> 
         {% endif %}
 
@@ -48,6 +48,7 @@
 {% include 'ApplicationUpdate_form.html' %}
 {% include 'ApplicationRejected_form.html' %}
 {% include 'CategoryAddModal.html' %}
+{% include 'deleteCatagory.html' %}
 <main class="zayvkiProfil container">
     <div class="MyZayvki">
         <p>Мои заявки</p>

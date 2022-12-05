@@ -156,7 +156,6 @@ class UpdataApplicationRejected(FormView):
 class AddCategory(CreateView):
     model = Category
     template_name = 'CategoryAddModal.html'
-    form_class = CategoryAddForms
     
     def post(self, request):
         form = CategoryAddForms(request.POST)     
@@ -165,8 +164,6 @@ class AddCategory(CreateView):
             data =  {
                 'category': form.cleaned_data['category'],
             }
-            print(form)
-
             form.save()
             
             return JsonResponse({'success': data})

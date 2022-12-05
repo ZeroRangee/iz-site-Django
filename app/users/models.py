@@ -36,15 +36,16 @@ class Application(models.Model):
     
     
 class Category(models.Model):
-    name = models.CharField(max_length=100, db_index=True,verbose_name = "Категория") 
+    category = models.CharField(max_length=100, db_index=True,verbose_name = "Категория") 
     
-    # def get_absolute_url(self):
-    #     return reverse("category", kwargs={"cat_id": self.pk})
+    def get_absolute_url(self):
+        return reverse("category", kwargs={"cat_id": self.pk})
+    
+    def __str__(self):
+        return self.category
     
     class Meta:
         verbose_name = "Категория"
         verbose_name_plural = "Категории"
         ordering = ['id']
         
-    def __str__(self):
-        return self.name
