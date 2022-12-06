@@ -14,6 +14,7 @@ urlpatterns = [
     path('profil/updateApplication/<int:pk>/',  UpdataApplicationAgreed.as_view(), name='updateApplication'),
     path('profil/rejectedApplication/<int:pk>/',  UpdataApplicationRejected.as_view(), name='rejectedApplication'),
     path('profil/categoryAdd/',  AddCategory.as_view(), name='categoryAdd'),
+    path('profil/categoryDelete/<int:pk>/',  DeleteCategory.as_view(), name='categoryDelete'),
 ]
 
 if settings.DEBUG:

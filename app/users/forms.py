@@ -103,7 +103,14 @@ class CategoryAddForms(forms.ModelForm):
         
 class CategoryDelete(forms.Form):
     
-    categoryDelete = forms.CharField(widget=forms.Select(),required=False)
+    categoryDelete = forms.ModelChoiceField(widget=forms.Select(),queryset=Category.objects.all(), required=False)
+    
+    def clean_categoryDelete(self):
+        categoryDelete = self.cleaned_data['categoryDelete']
+        
+        if categoryDelete == '':
+            raise ValidationError(message='Выберите категорию', code="invalid")
+        return categoryDelete
     
     class Meta:
         model = Category

@@ -487,6 +487,49 @@ $(function ($) {
 
 
 
+$(function ($) {
+	$('#CategoryDelete').submit(function (e) {
+		e.preventDefault()
+		urls = '/accounts/profil/categoryDelete/' + document.getElementById('id_categoryDelete').value + '/'
+		console.log(urls)
+		$.ajax({
+			type: this.method,
+			url: urls,
+			dataType: 'json',
+			headers: { 'X-CSRFToken': getCookie('csrftoken') },
+			success: function (response) {
+
+				if (response.errors) {
+					for (let i in response.errors) {
+						console.log(i);
+						$('.msg').text(response.errors[i]).removeClass('none')
+
+						$('.msg').each((index, ex) => {
+							$(el).remove()
+						})
+						// console.log(i);
+					}
+
+				}
+				else {
+					// window.location.reload()
+				}
+
+
+				
+			},
+			error: function (data) {
+				// console.log('err -',response)
+
+			},
+
+		}
+		)
+	})
+})
+
+
+
 
 // function getAppli() {
 // 	let response = fetch('/accounts/profil/', {

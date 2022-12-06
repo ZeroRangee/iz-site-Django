@@ -109,7 +109,27 @@ class DeleteApplication(DeleteView):
     template_name = 'ApplicationDeleteModal.html'
     model = Application
     success_url = reverse_lazy('profil')
+
+class DeleteCategory(FormView):
+    template_name = 'deleteCategory.html'
+    model = Category
+    success_url = reverse_lazy('profil')
     
+    def post(self, request, pk):
+        form = CategoryDelete(request.POST)
+        if form.is_valid():
+            data = {
+                'categoryDelete': form.cleaned_data['categoryDelete'],
+            }
+            Category.objects.filter(id=pk).delete()
+            Application.objects.filter(cat=pk).delete()
+            
+            return JsonResponse({'success': data})
+        else:
+            return JsonResponse({'errors': form.errors})
+            
+    
+
 class UpdataApplicationAgreed(FormView):
     model = Application
     template_name = 'ApplicationUpdate_form.html'
@@ -152,6 +172,8 @@ class UpdataApplicationRejected(FormView):
             # print(form.cleaned_data['username'], form.cleaned_data['password'])
             print(form.errors)
             return JsonResponse({'errors': form.errors})
+
+
 
 class AddCategory(CreateView):
     model = Category
