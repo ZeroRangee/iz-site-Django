@@ -1,7 +1,3 @@
-// import csrft from "/csrftoken"
-// $(document).ready(() =>{
-// 	csrft()
-// })
 
 function changestyle() {
 	var stick = document.getElementById("stick")
@@ -14,7 +10,6 @@ function changestyle() {
 	}
 }
 setTimeout(changestyle, 0);
-
 
 
 
@@ -96,7 +91,11 @@ $(document).ready(function ($) {
 $(document).ready(function ($) {
 	$('.closeZayvka').click(function () {
 		$('.overlayApplicationDeleteModal').fadeIn();
+		// console.log('asdasd')
+		// const url = "/accounts/profil/deleteApplication/" + $(this).attr('href') + "/"
 		const urls = $(this).attr('href')
+
+
 		$(function ($) {
 			$('#DeleteModal').submit(function (e) {
 				e.preventDefault()
@@ -145,11 +144,7 @@ $(document).ready(function ($) {
 			$('#UpdateAgreed').submit(function (e) {
 				let formData = new FormData(UpdateAgreed)
 
-				let photo = $(this).find('input[name="photo_after"]')
-
-				for (var i = 0; i < photo[0].files.length; i++) {
-					formData.append("file_" + i, photo[0].files[i]);
-				}
+				console.log(formData)
 				e.preventDefault()
 				$.ajax({
 					type: this.method,
@@ -172,11 +167,6 @@ $(document).ready(function ($) {
 							}
 						}
 						else {
-							// var respons = JSON.parse(response.success);
-							// console.log(respons)
-
-							// $(".applicationBlock").html(respons)
-
 
 						}
 					},
@@ -234,16 +224,11 @@ $(document).ready(function ($) {
 							}
 						}
 						else {
-							// var respons = JSON.parse(response.success);
-							// console.log(respons)
-
-							// $(".applicationBlock").html(respons)
-
 
 						}
 					},
 					error: function (data) {
-						// console.log('err -',response)
+
 
 					},
 
@@ -328,7 +313,6 @@ $(function ($) {
 			dataType: 'json',
 			headers: { 'X-CSRFToken': getCookie('csrftoken') },
 			success: function (response) {
-				// var error = response.errors.length
 				console.log(response.errors)
 				if (response.errors) {
 					for (let i in response.errors) {
@@ -362,7 +346,6 @@ $(function ($) {
 			dataType: 'json',
 			headers: { 'X-CSRFToken': getCookie('csrftoken') },
 			success: function (response) {
-				// var error = response.errors.length
 				console.log(response.errors)
 				if (response.errors) {
 					for (let i in response.errors) {
@@ -379,14 +362,7 @@ $(function ($) {
 				else {
 					// window.location.reload()
 				}
-				// if ('errors' in response){
-				// 	$('.msg').text(response.errors['__all__']).removeClass('none')
 
-				// 	$('.msg').each((index, ex) => {
-				// 		$(el).remove()
-				// 	}) 
-				// }
-				// console.log('ok -', response)
 			},
 			error: function (response) {
 				// console.log('err -',response)
@@ -400,13 +376,9 @@ $(function ($) {
 $(function ($) {
 	$('#ZayvkaForm').submit(function (e) {
 		e.preventDefault()
+
+
 		let formData = new FormData(ZayvkaForm)
-
-		let photo = $(this).find('input[name="photo"]')
-
-		for (var i = 0; i < photo[0].files.length; i++) {
-			formData.append("file_" + i, photo[0].files[i]);
-		}
 
 		$.ajax({
 			type: this.method,
@@ -417,6 +389,7 @@ $(function ($) {
 			dataType: 'json',
 			headers: { 'X-CSRFToken': getCookie('csrftoken') },
 			success: function (response) {
+				console.log(response.success['photo'])
 				if (response['errors']) {
 					for (let i in response['errors']) {
 						console.log(i);
@@ -429,17 +402,13 @@ $(function ($) {
 					}
 				}
 				else {
-					// var respons = JSON.parse(response.success);
-					// console.log(respons)
-
-					// $(".applicationBlock").html(respons)
+					$('#applicationBlock').load(`/accounts/profil/application/`)
 
 
 				}
 
 			},
 			error: function (data) {
-				// console.log('err -',response)
 
 			},
 
@@ -516,7 +485,7 @@ $(function ($) {
 				}
 
 
-				
+
 			},
 			error: function (data) {
 				// console.log('err -',response)
@@ -527,20 +496,3 @@ $(function ($) {
 		)
 	})
 })
-
-
-
-
-// function getAppli() {
-// 	let response = fetch('/accounts/profil/', {
-// 		method: 'get',
-// 		headers: {
-// 			'X-Requested-With': 'XMLHttpRequest',
-// 			'Content-Type': 'application/json'
-// 		}
-// 	})
-// 	let data = response.json()
-// 	console.log(data)
-// 	// let content = document.getElementById('application')
-// 	// content.innerHTML = data
-// }

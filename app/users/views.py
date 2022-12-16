@@ -1,3 +1,4 @@
+import json
 from django.contrib.auth import authenticate, login
 from django.urls import reverse_lazy
 from django.contrib.auth import get_user_model
@@ -66,7 +67,7 @@ class SingInModalView(LoginView):
     def get_success_url(self):
         return reverse_lazy('profil')
     
-class ShowApplication(DetailView):
+class ShowApplication(ListView):
     model = Application
     template_name = 'application.html'
     context_object_name = 'application'
@@ -95,15 +96,6 @@ class ProfilView(ListView):
         
         return queryset
     
-    # def get(self, request):
-    #     queryset = []
-    #     if self.request.user.is_superuser:
-    #         queryset =  serializers.serialize('json',Application.objects.all())
-    #     else:
-    #         queryset = serializers.serialize('json',Application.objects.filter(user=self.request.user))
-        
-        
-    #     return JsonResponse({'queryset': queryset})
         
 class DeleteApplication(DeleteView):
     template_name = 'ApplicationDeleteModal.html'
@@ -205,9 +197,9 @@ class ApplicationAdd(CreateView):
             
             data =  {
                 'title': form.cleaned_data['title'],
-                'photo': form.cleaned_data['photo'],
+                'photo': json.dumps(str(form.cleaned_data['photo']), ensure_ascii=False,separators=None),
                 'content': form.cleaned_data['content'],
-                'cat': form.cleaned_data['cat'],
+                'cat': str(form.cleaned_data['cat']),
             }
             # print(data)
             

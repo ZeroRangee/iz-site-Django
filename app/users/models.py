@@ -13,7 +13,7 @@ class Application(models.Model):
     title = models.CharField(max_length=255, verbose_name="Название заявки")
     content = models.TextField(blank=True, verbose_name="Описание заявки")
     rejection_reason = models.TextField(blank=True, verbose_name="Причина отказа", null=True)
-    photo_after = models.ImageField(upload_to='photo/%Y/%m/%d/', verbose_name="Фотография заявки после",  null=True)
+    photo_after = models.ImageField(upload_to='photo_after/%Y/%m/%d/', verbose_name="Фотография заявки после",  null=True)
     photo = models.ImageField(upload_to='photo/%Y/%m/%d/', verbose_name="Фотография заявки")
     time_create = models.DateTimeField(auto_now_add=True, verbose_name="Время создание заявки")
     time_update = models.DateTimeField(auto_now=True, verbose_name="Время изменения заявки")

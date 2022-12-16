@@ -73,6 +73,7 @@ class ApplicationAgreedUpdateForms(forms.Form):
         if photo.size > 10485760:
             raise ValidationError(message='Файл должен весить меньше 10мб', code='invalid')
         return photo
+    
     class Meta:
         model = Application
         fields = ['photo_after']
