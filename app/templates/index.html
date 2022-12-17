@@ -44,18 +44,17 @@
     <section class="recentZayvki">
         <h2>Недавние заявки</h2>
         <hr>
-        <div>
+        <div class="grid">
             {% for application in agreed %}
                 <div class="zayvoki"> 
-                <div class="photoAgreed">
-                    <img src="{{ application.photo.url }}"  class="photoA" alt="asd">
-                    <img src="/media/{{  application.pa }}"  class="Photo_after" alt="photo_after">
-                </div>
-                    {% if user.is_staff %}
-                        <a href=""> {{ application.title }}</a>
-                    {% else %}
-                        <a>{{ application.title }}</a>
-                    {% endif %}
+                        <div class="photoAgreed">
+                            <img src="{{ application.photo.url }}"  class="photoA" alt="asd">
+                            <img src="/media/{{  application.pa }}"  class="Photo_a" alt="photo_after">
+                        </div>
+
+                    <p> {{ application.title }}</p>
+                    <p> {{ application.time_update}} </p>
+                    <p> {{ application.cat }} </p>
                 </div>
             {% endfor %}
         </div>

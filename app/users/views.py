@@ -111,9 +111,9 @@ class DeleteCategory(FormView):
             data = {
                 'categoryDelete': form.cleaned_data['categoryDelete'],
             }
-            Category.objects.filter(id=pk).delete()
-            Application.objects.filter(cat=pk).delete()
             
+            Application.objects.filter(cat=pk).delete()
+            Category.objects.filter(id=pk).delete()
             return JsonResponse({'success': data})
         else:
             return JsonResponse({'errors': form.errors})

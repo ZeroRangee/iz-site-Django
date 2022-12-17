@@ -90,6 +90,8 @@ nav {
 
 /* основная страница */
 
+
+
 .wrapper {
     margin: 50px auto;
     display: grid;
@@ -139,14 +141,26 @@ nav {
 }
 
 
-.recentZayvki div {
+.grid {
     margin-top: 10px;
     display: grid;
     grid-template-columns: 300px 200px;
     grid-column-gap: 30px;
-    grid-row-gap: 40px;
+    grid-row-gap: 180px;
 }
 
+.zayvoki p {
+    z-index: 3;
+    position: relative;
+    top:130px;
+    font-weight: 500;
+    color: #3e7cb1;
+    font-size: 18px;
+    z-index: 1;
+}
+.zayvoki p::selection{
+    background: transparent;
+}
 .photoA {
     width: 300px;
     height: 200px;
@@ -154,37 +168,44 @@ nav {
 
 }
 
-.photoAgreed {
+/* .photoAgreed {
     position: relative;
-}
+} */
 
-.imgZayvka img {
+/* .imgZayvka img {
     position: absolute;
+} */
+.photoAgreed img {
+    position: absolute;
+    margin-top: 20px;
+    
 }
-
 .photoA {
     transition: .3s;
     width: 300px;
     height: 200px;
     border-radius: 5px;
+    display: block;
 }
 
-.Photo_after {
+.Photo_a {
     opacity: 0;
     width: 300px;
     height: 200px;
     border-radius: 5px;
     transition: .3s;
-    position: absolute;
+    z-index: 1px;
 }
 
-.photoAgreed:hover img.Photo_after {
+.photoAgreed:hover img.Photo_a {
     opacity: 1;
     transform: scale(1.1);
+    z-index: 2;
+
 }
 
 .photoAgreed:hover img.photoA,
-.photoAgreed img.photoA:hover {
+.photoAgreed img.photoA:hover{
     transform: scale(1.1);
     opacity: 0;
 

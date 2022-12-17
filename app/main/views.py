@@ -13,7 +13,7 @@ class Main(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = "Ижевск"
-        context['allappli'] =  Application.objects.all().count
+        context['allappli'] =  Application.objects.filter(status="AGREED").count
         context['agreed'] =  Application.objects.filter(status="AGREED").order_by('-time_update')[:4]
         return context
         
