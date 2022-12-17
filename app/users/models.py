@@ -13,12 +13,13 @@ class Application(models.Model):
     title = models.CharField(max_length=255, verbose_name="Название заявки")
     content = models.TextField(blank=True, verbose_name="Описание заявки")
     rejection_reason = models.TextField(blank=True, verbose_name="Причина отказа", null=True)
-    photo_after = models.ImageField(upload_to='photo_after/%Y/%m/%d/', verbose_name="Фотография заявки после",  null=True)
     photo = models.ImageField(upload_to='photo/%Y/%m/%d/', verbose_name="Фотография заявки")
     time_create = models.DateTimeField(auto_now_add=True, verbose_name="Время создание заявки")
     time_update = models.DateTimeField(auto_now=True, verbose_name="Время изменения заявки")
     is_published = models.BooleanField(default=True, verbose_name="Публикация")
     status = models.CharField(Status, max_length=30, choices = Status.choices, default=Status.CREATED)
+
+    pa = models.OneToOneField('AfterPhoto',  on_delete=models.SET_NULL, null = True, blank=True)
 
     cat = models.ForeignKey('Category', on_delete=models.PROTECT, null=True,related_name ="applicationCategory",  verbose_name="Категория", blank=True)
     
@@ -48,4 +49,19 @@ class Category(models.Model):
         verbose_name = "Категория"
         verbose_name_plural = "Категории"
         ordering = ['id']
-        
+
+
+class AfterPhoto(models.Model):
+    photo_after = models.ImageField(upload_to='photo_after/%Y/%m/%d/', verbose_name="Фотография заявки после",  null=True)
+
+
+    def get_absolute_url(self):
+        return reverse("photo_after", kwargs={"pa_id": self.pk})
+
+    def __str__(self):
+        return f"{self.photo_after}"
+    
+    class Meta:
+        verbose_name = "Фотография после"
+        verbose_name_plural = "Фотографии посли"
+        ordering = ['id']

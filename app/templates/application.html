@@ -15,10 +15,10 @@
             {% endif %}  
             <div class="imgZayvka ">
                 {% if application.photo %}
-                    <img src="{{ application.photo.url }}" alt="asd" class="imgZayvka ">
+                    <img src=" {{ application.photo.url }}" alt="asd" class="photo">
                 {% endif %}
-                {% if application.photo_after %}
-                    <img src="{{ application.photo_after.url }}"  class="photo_after" alt="photo_after">
+                {% if application.pa %}
+                    <img src="/media/{{ application.pa }}"  class="photo_after" alt="photo_after">
                 {% endif %}
             </div>
 

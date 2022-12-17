@@ -11,7 +11,12 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display_links = ('id', 'category')
     search_fields = ('category',)
     
+class PhotoAfterAdmin(admin.ModelAdmin):
+    list_display = ('id', 'photo_after')
+    list_display_links = ('id', 'photo_after')
+    search_fields = ('photo_after',)
 
 
 admin.site.register(Application, ApplicationAdmin)
 admin.site.register(Category, CategoryAdmin)
+admin.site.register(AfterPhoto, PhotoAfterAdmin)

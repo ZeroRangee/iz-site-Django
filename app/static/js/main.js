@@ -496,3 +496,31 @@ $(function ($) {
 		)
 	})
 })
+
+
+// $('.imgZayvka').on('mouseout', function (e) {
+// 	$('.imgZayvkar').css('display', 'none')
+// 	$('.photo_after').css('display', 'block')
+// })
+
+$(".Agreed").on('click', function (e) {
+	$('#applicationBlock').load(`/accounts/profil/applicationAgreed/`)
+})
+$(".Created").on('click', function (e) {
+	$('#applicationBlock').load(`/accounts/profil/applicationCreated/`)
+})
+
+$(".Rejected").on('click', function (e) {
+	$('#applicationBlock').load(`/accounts/profil/applicationRejected/`)
+})
+$(function () {
+	$('.dropdownUl li ').hover(
+		function () {
+			$('dropdownUl li', this).slideDown(500)
+		},
+		function () {
+			$('dropdownUl li ', this).slideUp(500)
+
+		}
+	)
+})

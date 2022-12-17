@@ -36,7 +36,7 @@ class SingUpModalView(FormView):
             }
             authenticate(self.request,username=username, password=password)
             form.save()
-            # 
+            
             
             return JsonResponse({'success': data})
         else:
@@ -60,8 +60,6 @@ class SingInModalView(LoginView):
             login(request, user)
             return JsonResponse({'success': data})
         else:
-            # print(form.cleaned_data['username'], form.cleaned_data['password'])
-            print({'errors': form.error_messages})
             return JsonResponse({'errors': form.error_messages})
         
     def get_success_url(self):
@@ -71,6 +69,15 @@ class ShowApplication(ListView):
     model = Application
     template_name = 'application.html'
     context_object_name = 'application'
+    
+    def get_queryset(self):
+        queryset = []
+        if self.request.user.is_superuser:
+            queryset =  Application.objects.all()
+        else:
+            queryset = Application.objects.filter(user=self.request.user)
+        
+        return queryset
     
 
     
@@ -86,15 +93,6 @@ class ProfilView(ListView):
         context = super().get_context_data(**kwargs)
         context['title'] = "Профиль"
         return context   
-    
-    def get_queryset(self):
-        queryset = []
-        if self.request.user.is_superuser:
-            queryset =  Application.objects.all()
-        else:
-            queryset = Application.objects.filter(user=self.request.user)
-        
-        return queryset
     
         
 class DeleteApplication(DeleteView):
@@ -122,27 +120,27 @@ class DeleteCategory(FormView):
             
     
 
-class UpdataApplicationAgreed(FormView):
-    model = Application
+class UpdataApplicationAgreed(CreateView):
+    model = AfterPhoto
     template_name = 'ApplicationUpdate_form.html'
     success_url = reverse_lazy('profil')
-
+    fields = ['photo_after']
     def post(self, request, pk):
         form = ApplicationAgreedUpdateForms(request.POST,request.FILES)     
-        print(pk)
-        print(form['photo_after'])
 
         if form.is_valid():
-            photo = request.FILES['photo_after']
             data =  {
-                'photo_after': form.cleaned_data['photo_after'],
+                'photo_after': json.dumps(str(form.cleaned_data['photo_after']), ensure_ascii=False,separators=None),
             }
-            Application.objects.filter(id=pk).update(photo_after=form.cleaned_data['photo_after'], status=Status.AGREED)
-            data = serializers.serialize('json', Application.objects.all())
+           
+            # Application.objects.filter(id=pk).update( status=Status.AGREED)
+            form.save() 
+            numb = AfterPhoto.objects.all().count()
+            idAfter = AfterPhoto.objects.get(pk=AfterPhoto.objects.all()[numb-1:numb])
+            Application.objects.filter(id=pk).update( status=Status.AGREED, pa=idAfter)
+
             return JsonResponse({'success': data})
         else:
-            # print(form.cleaned_data['username'], form.cleaned_data['password'])
-            print(form.errors)
             return JsonResponse({'errors': form.errors})
         
 class UpdataApplicationRejected(FormView):
@@ -161,8 +159,7 @@ class UpdataApplicationRejected(FormView):
 
             return JsonResponse({'success': data})
         else:
-            # print(form.cleaned_data['username'], form.cleaned_data['password'])
-            print(form.errors)
+            
             return JsonResponse({'errors': form.errors})
 
 
@@ -201,18 +198,57 @@ class ApplicationAdd(CreateView):
                 'content': form.cleaned_data['content'],
                 'cat': str(form.cleaned_data['cat']),
             }
-            # print(data)
-            
-            
+
             form.save().user.add(self.request.user)
             
-            data = serializers.serialize('json', Application.objects.all())
-
             return JsonResponse({'success': data})
         else:
             # print(form.cleaned_data['username'], form.cleaned_data['password'])
             print({'errors': form.errors})
             return JsonResponse({'errors': form.errors})
+
+
+
+class ShowApplicationAgreed(ListView):
+    model = Application
+    template_name = 'application.html'
+    context_object_name = 'application'
     
+    def get_queryset(self):
+        queryset = []
+        if self.request.user.is_superuser:
+            queryset =  Application.objects.filter(status="AGREED")
+        else:
+            queryset = Application.objects.filter(user=self.request.user, status="AGREED")
+        
+        return queryset
+    
+class ShowApplicationCreated(ListView):
+    model = Application
+    template_name = 'application.html'
+    context_object_name = 'application'
+    
+    def get_queryset(self):
+        queryset = []
+        if self.request.user.is_superuser:
+            queryset =  Application.objects.filter(status="CREATED")
+        else:
+            queryset = Application.objects.filter(user=self.request.user, status="CREATED")
+        
+        return queryset
+class ShowApplicationRejected(ListView):
+    model = Application
+    template_name = 'application.html'
+    context_object_name = 'application'
+    
+    def get_queryset(self):
+        queryset = []
+        if self.request.user.is_superuser:
+            queryset =  Application.objects.filter(status="REJECTED")
+        else:
+            queryset = Application.objects.filter(user=self.request.user, status="REJECTED")
+        
+        return queryset
+
 class Logout(LogoutView):
     redirect_field_name = 'home' 

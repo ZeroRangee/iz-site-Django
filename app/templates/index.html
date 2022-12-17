@@ -47,9 +47,10 @@
         <div>
             {% for application in agreed %}
                 <div class="zayvoki"> 
-                {% if application.photo %}
-                    <img src="{{ application.photo.url }}" alt="asd">
-                {% endif %}
+                <div class="photoAgreed">
+                    <img src="{{ application.photo.url }}"  class="photoA" alt="asd">
+                    <img src="/media/{{  application.pa }}"  class="Photo_after" alt="photo_after">
+                </div>
                     {% if user.is_staff %}
                         <a href=""> {{ application.title }}</a>
                     {% else %}

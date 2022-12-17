@@ -147,17 +147,47 @@ nav {
     grid-row-gap: 40px;
 }
 
-.zayvoki {
+.photoA {
     width: 300px;
     height: 200px;
-    background: #054A91;
-    border-radius: 30px 30px 30px 0px;
+    border-radius: 5px;
+
 }
 
-.zayvoki img {
+.photoAgreed {
+    position: relative;
+}
+
+.imgZayvka img {
+    position: absolute;
+}
+
+.photoA {
+    transition: .3s;
     width: 300px;
     height: 200px;
-    border-radius: 30px 30px 30px 0px;
+    border-radius: 5px;
+}
+
+.Photo_after {
+    opacity: 0;
+    width: 300px;
+    height: 200px;
+    border-radius: 5px;
+    transition: .3s;
+    position: absolute;
+}
+
+.photoAgreed:hover img.Photo_after {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.photoAgreed:hover img.photoA,
+.photoAgreed img.photoA:hover {
+    transform: scale(1.1);
+    opacity: 0;
+
 }
 
 /* Модальное окно  SingUpModal*/
@@ -466,6 +496,7 @@ label[for=id_photo_after]:hover {
     padding: 4px;
 
 }
+
 /* Удаленние заявок */
 
 .overlayCategoryDeleteModal {
@@ -769,21 +800,52 @@ label[for=id_photo_after]:hover {
 
 
 
-.zayvka img {
+/* .zayvka img {
     width: 75px;
     height: 75px;
 
-}
+} */
 
-.zayvka .imgZayvka {
+.imgZayvka {
     width: 280px;
     height: 210px;
-    background: #054A91;
     border-radius: 5px;
 
 }
 
-.nameZayvka {
+.imgZayvka img {
+    position: absolute;
+}
+
+.photo {
+    transition: .3s;
+    width: 280px;
+    height: 210px;
+    border-radius: 5px;
+}
+
+.photo_after {
+    opacity: 0;
+    width: 280px;
+    height: 210px;
+    border-radius: 5px;
+    transition: .3s;
+}
+
+.imgZayvka:hover img.photo_after {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.imgZayvka:hover img.photo,
+.imgZayvka img.photo:hover {
+    transform: scale(1.1);
+    opacity: 0;
+
+}
+
+
+.imgZayvka .nameZayvka {
     margin-bottom: 5px;
     align-items: flex-end;
 }
@@ -1048,4 +1110,32 @@ label[for=id_photo]:hover {
     box-shadow: 0px 0px 10px rgba(245, 25, 25, 0.5);
     opacity: 1;
     border: 1px solid rgba(255, 0, 0, 0.466);
+}
+
+
+/* выпадающий список */
+
+
+.status {
+    display: inline;
+}
+
+.status a {
+    margin: 10px;
+    cursor: pointer;
+}
+
+.Created:hover {
+    transition: .3s;
+    color: #B5B8B1;
+}
+
+.Agreed:hover {
+    transition: .3s;
+    color: #00FF47;
+}
+
+.Rejected:hover {
+    transition: .3s;
+    color: #FF2400;
 }

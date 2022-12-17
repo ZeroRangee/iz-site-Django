@@ -58,7 +58,7 @@ class ApplicationAddForms(forms.ModelForm):
         model = Application
         fields = ['title', 'photo', 'content', 'cat']
         
-class ApplicationAgreedUpdateForms(forms.Form):
+class ApplicationAgreedUpdateForms(forms.ModelForm):
     photo_after = forms.ImageField(required=False,label="Фотография", validators=[
         FileExtensionValidator(
             allowed_extensions=['jpg','jpeg', 'png', 'bmp'],
@@ -75,7 +75,7 @@ class ApplicationAgreedUpdateForms(forms.Form):
         return photo
     
     class Meta:
-        model = Application
+        model = AfterPhoto
         fields = ['photo_after']
 
 class ApplicationRejectedUpdateForms(forms.Form):
