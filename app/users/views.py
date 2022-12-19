@@ -1,5 +1,6 @@
 import json
 from django.contrib.auth import authenticate, login
+from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.contrib.auth import get_user_model
 from django.views import View
@@ -11,9 +12,7 @@ from django.template.loader import render_to_string
 from .forms import *
 from .models import *
 from django.views.generic import ListView
-from django.core import serializers
-import os
-
+from django.template import loader
 User = get_user_model()
 
 class SingUpModalView(FormView):
@@ -68,7 +67,6 @@ class SingInModalView(LoginView):
 class ShowApplication(ListView):
     model = Application
     template_name = 'application.html'
-    context_object_name = 'application'
     
     def get_queryset(self):
         queryset = []
@@ -76,11 +74,11 @@ class ShowApplication(ListView):
             queryset =  Application.objects.all()
         else:
             queryset = Application.objects.filter(user=self.request.user)
-        
+    
         return queryset
-    
 
-    
+
+
 
  
 class ProfilView(ListView):
@@ -92,9 +90,17 @@ class ProfilView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = "Профиль"
-        return context   
-    
+        return context
         
+    def get_queryset(self):
+        queryset = []
+        if self.request.user.is_superuser:
+            queryset =  Application.objects.all()
+        else:
+            queryset = Application.objects.filter(user=self.request.user)
+    
+        return queryset
+    
 class DeleteApplication(DeleteView):
     template_name = 'ApplicationDeleteModal.html'
     model = Application
@@ -179,8 +185,6 @@ class AddCategory(CreateView):
             
             return JsonResponse({'success': data})
         else:
-            # print(form.cleaned_data['username'], form.cleaned_data['password'])
-            print(form.errors)
             return JsonResponse({'errors': form.errors})
             
 class ApplicationAdd(CreateView):
@@ -197,14 +201,16 @@ class ApplicationAdd(CreateView):
                 'photo': json.dumps(str(form.cleaned_data['photo']), ensure_ascii=False,separators=None),
                 'content': form.cleaned_data['content'],
                 'cat': str(form.cleaned_data['cat']),
+
             }
 
             form.save().user.add(self.request.user)
             
+            data.update({'id': int(Application.objects.first().pk) })
+            
             return JsonResponse({'success': data})
         else:
-            # print(form.cleaned_data['username'], form.cleaned_data['password'])
-            print({'errors': form.errors})
+
             return JsonResponse({'errors': form.errors})
 
 
@@ -212,7 +218,6 @@ class ApplicationAdd(CreateView):
 class ShowApplicationAgreed(ListView):
     model = Application
     template_name = 'application.html'
-    context_object_name = 'application'
     
     def get_queryset(self):
         queryset = []
@@ -226,7 +231,6 @@ class ShowApplicationAgreed(ListView):
 class ShowApplicationCreated(ListView):
     model = Application
     template_name = 'application.html'
-    context_object_name = 'application'
     
     def get_queryset(self):
         queryset = []
@@ -236,10 +240,11 @@ class ShowApplicationCreated(ListView):
             queryset = Application.objects.filter(user=self.request.user, status="CREATED")
         
         return queryset
+    
+    
 class ShowApplicationRejected(ListView):
     model = Application
     template_name = 'application.html'
-    context_object_name = 'application'
     
     def get_queryset(self):
         queryset = []

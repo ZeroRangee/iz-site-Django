@@ -97,7 +97,7 @@ nav {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     justify-content: space-between;
-    grid-column-gap: 120px;
+    /* grid-column-gap: 120px; */
 
 }
 
@@ -116,7 +116,17 @@ nav {
 
 }
 
+#stick {
+    font-size: 132px;
+    font: bold;
+}
+
 #number {
+    font-size: 132px;
+    font: bold;
+}
+
+.number {
     font-size: 132px;
     font: bold;
 }
@@ -152,15 +162,17 @@ nav {
 .zayvoki p {
     z-index: 3;
     position: relative;
-    top:130px;
+    top: 130px;
     font-weight: 500;
     color: #3e7cb1;
     font-size: 18px;
     z-index: 1;
 }
-.zayvoki p::selection{
+
+.zayvoki p::selection {
     background: transparent;
 }
+
 .photoA {
     width: 300px;
     height: 200px;
@@ -178,8 +190,9 @@ nav {
 .photoAgreed img {
     position: absolute;
     margin-top: 20px;
-    
+
 }
+
 .photoA {
     transition: .3s;
     width: 300px;
@@ -205,7 +218,7 @@ nav {
 }
 
 .photoAgreed:hover img.photoA,
-.photoAgreed img.photoA:hover{
+.photoAgreed img.photoA:hover {
     transform: scale(1.1);
     opacity: 0;
 
@@ -819,14 +832,6 @@ label[for=id_photo_after]:hover {
     padding: 10px;
 }
 
-
-
-/* .zayvka img {
-    width: 75px;
-    height: 75px;
-
-} */
-
 .imgZayvka {
     width: 280px;
     height: 210px;
@@ -834,35 +839,14 @@ label[for=id_photo_after]:hover {
 
 }
 
-.imgZayvka img {
+/* .imgZayvka img {
     position: absolute;
-}
+} */
 
 .photo {
-    transition: .3s;
     width: 280px;
     height: 210px;
     border-radius: 5px;
-}
-
-.photo_after {
-    opacity: 0;
-    width: 280px;
-    height: 210px;
-    border-radius: 5px;
-    transition: .3s;
-}
-
-.imgZayvka:hover img.photo_after {
-    opacity: 1;
-    transform: scale(1.1);
-}
-
-.imgZayvka:hover img.photo,
-.imgZayvka img.photo:hover {
-    transform: scale(1.1);
-    opacity: 0;
-
 }
 
 
@@ -889,7 +873,7 @@ label[for=id_photo_after]:hover {
 }
 
 .category {
-    margin-left: 90%;
+    float: right;
     font-size: 20px;
     font-weight: 500;
 }
@@ -912,26 +896,26 @@ label[for=id_photo_after]:hover {
     grid-row-end: 2;
 }
 
-#updateAgreed {
+.updateAgreed {
     width: 25px;
     height: 25px;
     color: #000;
 }
 
-#updateAgreed:hover {
+.updateAgreed:hover {
     color: #00FF47;
     cursor: pointer;
     transform: scale(1.2);
     transition: .3s;
 }
 
-#updateRejected {
+.updateRejected {
     width: 25px;
     height: 25px;
     color: #000;
 }
 
-#updateRejected:hover {
+.updateRejected:hover {
     color: #FF2400;
     cursor: pointer;
     transform: scale(1.2);
@@ -1137,11 +1121,11 @@ label[for=id_photo]:hover {
 /* выпадающий список */
 
 
-.status {
+#status {
     display: inline;
 }
 
-.status a {
+#status a {
     margin: 10px;
     cursor: pointer;
 }

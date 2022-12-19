@@ -36,7 +36,9 @@
         <div >
             <h1 class="">Ижевск</h1><br>
             <p class="zayvnum">Количество заявок:</p><br>
-            <p id="number">{{ allappli}}<span id="stick" >_</span></p>
+
+            <span id="number"> </span><span id="stick" >_</span>
+{% comment %} <span id="stick" >_</span> {% endcomment %}
             
         </div>
 
@@ -44,21 +46,10 @@
     <section class="recentZayvki">
         <h2>Недавние заявки</h2>
         <hr>
-        <div class="grid">
-            {% for application in agreed %}
-                <div class="zayvoki"> 
-                        <div class="photoAgreed">
-                            <img src="{{ application.photo.url }}"  class="photoA" alt="asd">
-                            <img src="/media/{{  application.pa }}"  class="Photo_a" alt="photo_after">
-                        </div>
+        <div class="gridBlock">
 
-                    <p> {{ application.title }}</p>
-                    <p> {{ application.time_update}} </p>
-                    <p> {{ application.cat }} </p>
-                </div>
-            {% endfor %}
+            {% include "applicationAgreed.html" %}
         </div>
-
     </section>
 </main>
 

@@ -33,7 +33,7 @@ class Application(models.Model):
     class Meta:
         verbose_name = "Заявки"
         verbose_name_plural = "Заявки"
-        ordering = ['status']
+        ordering = ['-time_update']
     
     
 class Category(models.Model):

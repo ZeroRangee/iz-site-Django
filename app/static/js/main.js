@@ -11,7 +11,50 @@ function changestyle() {
 }
 setTimeout(changestyle, 0);
 
+function clearInput(form, firstInput, lastInput) {
+	for (let i in form[0]) {
+		if (Number(i) >= firstInput && Number(i) < lastInput) {
+			$(form[0][i]).val('');
+		}
+		else if (Number(i) > lastInput + 1) {
+			break
+		}
+	}
+}
+function countAgreed() {
+	fetch('/countAgreed/')
+		.then((response) => response.json())
+		.then((data) => {
+			console.log(data.data)
+			$('#number').html('').text(data.data)
+			$('.gridBlock').load(`/applicationAgreed/`)
+		})
+}
+countAgreed()
 
+
+// setInterval(countAgreed, 5000)
+// function autoNext() {
+// 	countAgreed()
+// 	next();
+// 	setTimeout(autoNext, 2000);
+// }
+// setTimeout(autoNext, 5000);
+
+
+
+
+
+
+// let form = $('#ZayvkaForm')[0]
+// console.log(form[1])
+// for (let i in $('#ZayvkaForm')[0]) {
+// 	numb = 0
+// 	console.log(i)
+// 	if (Number(i) > 0 && Number(i) < 5) {
+// 		console.log($('#ZayvkaForm')[0][i])
+// 		$($('#ZayvkaForm')[0][i]).val('');
+// 	} else {
 
 $(document).ready(function ($) {
 	$('#BtnSingUP').click(function () {
@@ -72,18 +115,27 @@ $(document).ready(function ($) {
 		return false;
 	});
 	$('.closeZayvkaUp').click(function () {
+		$('.msg').addClass('none');
+		$('input').removeClass('error');
 		$(this).parents('.overlayZayvka').fadeOut();
+
 		return false;
 	});
 	$(document).keydown(function (e) {
 		if (e.keyCode === 27) {
+			$('.msg').addClass('none');
+			$('input').removeClass('error');
 			e.stopPropagation();
 			$('.overlayZayvka').fadeOut();
+
 		}
 	});
 	$('.overlayZayvka').click(function (e) {
 		if ($(e.target).closest('.modalZayvkaUp').length == 0) {
+			$('.msg').addClass('none');
+			$('input').removeClass('error');
 			$(this).fadeOut();
+			console.log($(this))
 		}
 	});
 });
@@ -91,11 +143,8 @@ $(document).ready(function ($) {
 $(document).ready(function ($) {
 	$('.closeZayvka').click(function () {
 		$('.overlayApplicationDeleteModal').fadeIn();
-		// console.log('asdasd')
-		// const url = "/accounts/profil/deleteApplication/" + $(this).attr('href') + "/"
 		const urls = $(this).attr('href')
-
-
+		console.log(urls)
 		$(function ($) {
 			$('#DeleteModal').submit(function (e) {
 				e.preventDefault()
@@ -105,6 +154,9 @@ $(document).ready(function ($) {
 					headers: { 'X-CSRFToken': getCookie('csrftoken') },
 					success: function (response) {
 						console.log(response)
+						$('.overlayApplicationDeleteModal').fadeOut();
+						$('#applicationBlock').load('/accounts/profil/application/')
+
 					},
 					error: function (data) {
 						// console.log('err -',response)
@@ -118,88 +170,117 @@ $(document).ready(function ($) {
 		return false;
 	});
 	$('.close').click(function () {
+		$('.msg').addClass('none');
+		$('input').removeClass('error');
 		$(this).parents('.overlayApplicationDeleteModal').fadeOut();
 		return false;
 	});
 	$(document).keydown(function (e) {
 		if (e.keyCode === 27) {
+			$('.msg').addClass('none');
+			$('input').removeClass('error');
 			e.stopPropagation();
 			$('.overlayApplicationDeleteModal').fadeOut();
 		}
 	});
 	$('.overlayApplicationDeleteModal').click(function (e) {
 		if ($(e.target).closest('.modalApplicationDelete').length == 0) {
+			$('.msg').addClass('none');
+			$('input').removeClass('error');
 			$(this).fadeOut();
 		}
 	});
 });
 
 $(document).ready(function ($) {
-	$('#updateAgreed').click(function () {
+	$(".Agreed").on('click', function (e) {
+		$('#applicationBlock').load(`/accounts/profil/applicationAgreed/`)
+	})
+	$(".Created").on('click', function (e) {
+		$('#applicationBlock').load(`/accounts/profil/applicationCreated/`)
+	})
+
+	$(".Rejected").on('click', function (e) {
+		$('#applicationBlock').load(`/accounts/profil/applicationRejected/`)
+	})
+})
+
+
+$(document).ready(function ($) {
+	$('.updateAgreed').click(function () {
 		$('.overlayApplicationUpdateAgreedModal').fadeIn();
 		const urls = $(this).attr('href')
 		console.log(urls)
+		$('#UpdateAgreed').submit(function (e) {
+			let formData = new FormData(UpdateAgreed)
 
-		$(function ($) {
-			$('#UpdateAgreed').submit(function (e) {
-				let formData = new FormData(UpdateAgreed)
+			console.log(formData)
+			e.preventDefault()
+			$.ajax({
+				type: this.method,
+				url: urls,
+				contentType: false,
+				processData: false,
+				data: formData,
+				dataType: 'json',
+				headers: { 'X-CSRFToken': getCookie('csrftoken') },
+				success: function (response) {
+					if (response['errors']) {
+						for (let i in response['errors']) {
+							console.log(i);
+							$('.msg').text(response['errors'][i]).removeClass('none')
 
-				console.log(formData)
-				e.preventDefault()
-				$.ajax({
-					type: this.method,
-					url: urls,
-					contentType: false,
-					processData: false,
-					data: formData,
-					dataType: 'json',
-					headers: { 'X-CSRFToken': getCookie('csrftoken') },
-					success: function (response) {
-						if (response['errors']) {
-							for (let i in response['errors']) {
-								console.log(i);
-								$('.msg').text(response['errors'][i]).removeClass('none')
-
-								$('.msg').each((index, ex) => {
-									$(el).remove()
-								})
-								// console.log(i);
-							}
+							$('.msg').each((index, ex) => {
+								$(el).remove()
+							})
+							// console.log(i);
 						}
-						else {
+					}
+					else {
+						$('.overlayApplicationUpdateAgreedModal').fadeOut();
+						$('#applicationBlock').load('/accounts/profil/application/')
+						$('#sound')[0].play()
 
-						}
-					},
-					error: function (data) {
-						// console.log('err -',response)
 
-					},
 
-				}
-				)
-			})
+
+					}
+				},
+				error: function (data) {
+					// console.log('err -',response)
+
+				},
+
+			}
+			)
 		})
 		return false;
 	});
 	$('.closeZayvkaUp').click(function () {
+		$('.msg').addClass('none');
+		$('input').removeClass('error');
 		$(this).parents('.overlayApplicationUpdateAgreedModal').fadeOut();
 		return false;
 	});
 	$(document).keydown(function (e) {
 		if (e.keyCode === 27) {
+			$('.msg').addClass('none');
+			$('input').removeClass('error');
 			e.stopPropagation();
 			$('.overlayApplicationUpdateAgreedModal').fadeOut();
 		}
 	});
 	$('.overlayApplicationUpdateAgreedModal').click(function (e) {
 		if ($(e.target).closest('.modalApplicationUpdateAgreed').length == 0) {
+			$('.msg').addClass('none');
+			$('input').removeClass('error');
 			$(this).fadeOut();
 		}
 	});
 });
 
 $(document).ready(function ($) {
-	$('#updateRejected').click(function () {
+	$('.updateRejected').click(function () {
 		$('.overlayApplicationUpdateRejectedModal').fadeIn();
 		const urls = $(this).attr('href')
 		$(function ($) {
@@ -224,6 +305,9 @@ $(document).ready(function ($) {
 							}
 						}
 						else {
+							$('.overlayApplicationUpdateRejectedModal').fadeOut();
+							$('#applicationBlock').load('/accounts/profil/application/')
+
 
 						}
 					},
@@ -239,17 +323,23 @@ $(document).ready(function ($) {
 		return false;
 	});
 	$('.close').click(function () {
+		$('.msg').addClass('none');
+		$('input').removeClass('error');
 		$(this).parents('.overlayApplicationUpdateRejectedModal').fadeOut();
 		return false;
 	});
 	$(document).keydown(function (e) {
 		if (e.keyCode === 27) {
+			$('.msg').addClass('none');
+			$('input').removeClass('error');
 			e.stopPropagation();
 			$('.overlayApplicationUpdateRejectedModal').fadeOut();
 		}
 	});
 	$('.overlayApplicationUpdateRejectedModal').click(function (e) {
 		if ($(e.target).closest('.modalApplicationUpdateRejected').length == 0) {
+			$('.msg').addClass('none');
+			$('input').removeClass('error');
 			$(this).fadeOut();
 		}
 	});
@@ -262,17 +352,23 @@ $(document).ready(function ($) {
 		return false;
 	});
 	$('.closeZayvkaUp').click(function () {
+		$('.msg').addClass('none');
+		$('input').removeClass('error');
 		$(this).parents('.overlayCategoryAddModal').fadeOut();
 		return false;
 	});
 	$(document).keydown(function (e) {
 		if (e.keyCode === 27) {
+			$('.msg').addClass('none');
+			$('input').removeClass('error');
 			e.stopPropagation();
 			$('.overlayCategoryAddModal').fadeOut();
 		}
 	});
 	$('.overlayCategoryAddModal').click(function (e) {
 		if ($(e.target).closest('.modalCategoryAdd').length == 0) {
+			$('.msg').addClass('none');
+			$('input').removeClass('error');
 			$(this).fadeOut();
 		}
 	});
@@ -284,17 +380,23 @@ $(document).ready(function ($) {
 		return false;
 	});
 	$('.closeZayvkaUp').click(function () {
+		$('.msg').addClass('none');
+		$('input').removeClass('error');
 		$(this).parents('.overlayCategoryDeleteModal').fadeOut();
 		return false;
 	});
 	$(document).keydown(function (e) {
 		if (e.keyCode === 27) {
+			$('.msg').addClass('none');
+			$('input').removeClass('error');
 			e.stopPropagation();
 			$('.overlayCategoryDeleteModal').fadeOut();
 		}
 	});
 	$('.overlayCategoryDeleteModal').click(function (e) {
 		if ($(e.target).closest('.modalCategoryDelete').length == 0) {
+			$('.msg').addClass('none');
+			$('input').removeClass('error');
 			$(this).fadeOut();
 		}
 	});
@@ -327,6 +429,7 @@ $(function ($) {
 
 				}
 				else {
+					clearInput($('#SingUpForm'), 1, 6)
 					document.location.href = './accounts/profil';
 				}
 
@@ -360,7 +463,8 @@ $(function ($) {
 
 				}
 				else {
-					// window.location.reload()
+					$('.overlaySingUp').fadeOut();
+					clearInput($('#SingUpForm'), 1, 3)
 				}
 
 			},
@@ -376,10 +480,7 @@ $(function ($) {
 $(function ($) {
 	$('#ZayvkaForm').submit(function (e) {
 		e.preventDefault()
-
-
 		let formData = new FormData(ZayvkaForm)
-
 		$.ajax({
 			type: this.method,
 			url: this.action,
@@ -389,12 +490,9 @@ $(function ($) {
 			dataType: 'json',
 			headers: { 'X-CSRFToken': getCookie('csrftoken') },
 			success: function (response) {
-				console.log(response.success['photo'])
 				if (response['errors']) {
 					for (let i in response['errors']) {
-						console.log(i);
 						$('.msg').text(response['errors'][i]).removeClass('none')
-
 						$('.msg').each((index, ex) => {
 							$(el).remove()
 						})
@@ -402,7 +500,12 @@ $(function ($) {
 					}
 				}
 				else {
-					$('#applicationBlock').load(`/accounts/profil/application/`)
+					clearInput($('#ZayvkaForm'), 1, 5)
+					$('.msg').addClass('none')
+
+					$('.blockContent').load(`/accounts/profil/application/`)
+
+					$('.overlayZayvka').fadeOut();
 
 
 				}
@@ -413,7 +516,6 @@ $(function ($) {
 			},
 
 		})
-		return false
 	})
 })
 $(function ($) {
@@ -442,7 +544,9 @@ $(function ($) {
 
 				}
 				else {
-					// window.location.reload()
+					clearInput($('#CategoryAdd'), 1, 1)
+
+					$('.overlayCategoryAddModal').fadeOut();
 				}
 
 			},
@@ -481,7 +585,9 @@ $(function ($) {
 
 				}
 				else {
-					// window.location.reload()
+					clearInput($('#CategoryDelete'), 1, 1)
+					$('.overlayCategoryDeleteModal').fadeOut();
+
 				}
 
 
@@ -503,24 +609,4 @@ $(function ($) {
 // 	$('.photo_after').css('display', 'block')
 // })
 
-$(".Agreed").on('click', function (e) {
-	$('#applicationBlock').load(`/accounts/profil/applicationAgreed/`)
-})
-$(".Created").on('click', function (e) {
-	$('#applicationBlock').load(`/accounts/profil/applicationCreated/`)
-})
 
-$(".Rejected").on('click', function (e) {
-	$('#applicationBlock').load(`/accounts/profil/applicationRejected/`)
-})
-$(function () {
-	$('.dropdownUl li ').hover(
-		function () {
-			$('dropdownUl li', this).slideDown(500)
-		},
-		function () {
-			$('dropdownUl li ', this).slideUp(500)
-
-		}
-	)
-})

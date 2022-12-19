@@ -123,7 +123,7 @@ class SingUpForm(UserCreationForm):
     first_name = forms.CharField(
         widget=forms.TextInput(attrs={'autocomplete': 'text', 'placeholder': 'Введите ФИО'}),
         required=False,
-        validators=[RegexValidator(r'[^0-9a-zA-Z]', "Введите ФИО кириллицой")]
+        validators=[RegexValidator(r'([А-ЯЁ][а-яё]+[\-\s]?){3,}', "Введите ФИО кириллицой")]
         
     )
     username =  forms.CharField(

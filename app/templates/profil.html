@@ -43,17 +43,12 @@
 
 
 {% block content %}
-{% include 'ModalZayvkaUp.html' %}
-{% include 'ApplicationDeleteModal.html' %}
-{% include 'ApplicationUpdate_form.html' %}
-{% include 'ApplicationRejected_form.html' %}
-{% include 'CategoryAddModal.html' %}
-{% include 'deleteCategory.html' %}
+
 <main class="zayvkiProfil container">
     <div class="MyZayvki">
         <p>Мои заявки</p>
         <hr>
-        <div class="status">
+        <div id="status">
             <a class="Created"> Созданные заявки</a>
             <a class="Agreed"> Решенные заявки</a>
             <a class="Rejected"> Отмененные заявки</a>
@@ -61,12 +56,12 @@
     </div>
 
     <div class="applicationBlock" id='applicationBlock'>
-
         <div class="blockContent">
-        {% include "application.html" %}
+
+                
+            {% include "application.html" %}
+
         </div>
-
-
     <div>
 
 
@@ -74,5 +69,11 @@
 
 
 </main>
-
+{% include 'ModalZayvkaUp.html' %}
+{% include 'ApplicationDeleteModal.html' %}
+{% include 'ApplicationUpdate_form.html' %}
+{% include 'ApplicationRejected_form.html' %}
+{% include 'CategoryAddModal.html' %}
+{% include 'deleteCategory.html' %}
 {% endblock content%}
+
