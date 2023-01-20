@@ -192,7 +192,6 @@ class ApplicationAdd(CreateView):
     model = Application
     def post (self, request):
         form = ApplicationAddForms(request.POST,request.FILES)
-        # form.fields = request.FILES['photo']
         if form.is_valid():
             photo = request.FILES['photo']
             
